@@ -1,0 +1,3 @@
+
+alias ll="ls -latr"
+alias "c=xclip -sel clip"
