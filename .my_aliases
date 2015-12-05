@@ -1,3 +1,9 @@
+### Add this file to ~/.bashrc or ~/.bash_aliases  with:
+#if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
+#        . ~/MyGlobalBashAliases/.my_aliases
+#fi
 
 alias ll="ls -latr"
 alias "c=xclip -sel clip"
+alias mydu="du -sch * | sort -h"
+
