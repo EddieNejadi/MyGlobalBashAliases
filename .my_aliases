@@ -15,8 +15,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../../"
 alias mydu="du -sch .[!.]* * | sort -h"
-alias mysource="source ~/.bash_aliases && source ~/.bashrc"
-alias myaliasloc="vim ~/.bash_aliases && source ~/.bash_aliases"
+alias mysource="source ~/.bash_alias && source ~/.bashrc"
+alias myaliasloc="vim ~/.bash_alias && source ~/.bash_alias"
 alias findn="find . -name"
 alias updatedb="sudo updatedb"
 alias ll='ls -tral'
@@ -64,7 +64,7 @@ echo_blue()
         echo -e "\e[1;34m$1\e[0m"
 }
 alias eblue=echo_blue
-alias line='MYDATE=$(date) && echo -e "\e[1;33m$MYDATE\e[0m" && unset MYDATE && eecho -e "\e[1;34m=======================================================================\e[0m" && echo -e "\e[1;32m=======================================================================\e[0m" && echo -e "\e[1;31m=======================================================================\e[0m"'
+alias line='MYDATE=$(date) && echo -e "\e[1;33m$MYDATE\e[0m" && unset MYDATE && echo -e "\e[1;34m=======================================================================\e[0m" && echo -e "\e[1;32m=======================================================================\e[0m" && echo -e "\e[1;31m=======================================================================\e[0m"'
 alias yelline='echo -e "\e[1;33m=======================================================================\e[0m"'
 
 
