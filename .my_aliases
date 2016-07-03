@@ -11,7 +11,7 @@ fi
 #        . ~/.bash_aliases
 #fi
 
-alias myaliases = "alias | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | xclip -sel clip"
+alias myaliases="alias | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | xclip -sel clip"
 alias c="xclip -sel clip"
 alias ..="cd .."
 alias ...="cd ../.."
