@@ -13,7 +13,8 @@ fi
 
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
-
+# Sourcing bash alias to remote ssh host
+#
 #alias myaliases="alias | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | xclip -sel clip"
 alias myaliases="cat ~/MyGlobalBashAliases/.my_aliases | sed 's/#.*//'| grep 'alias ' | grep -v 'xclip\|myalias\|mysource\|========' | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | sed 's/$/;\n/' | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
 alias c="xclip -sel clip"
