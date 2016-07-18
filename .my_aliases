@@ -2,10 +2,10 @@
 #if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
 #        . ~/MyGlobalBashAliases/.my_aliases
 #fi
-if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
-        alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
-else
-        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
+# if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
+#         alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
+# else
+#         alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
 fi
 #if [ -f ~/.bash_aliases ]; then
 #        . ~/.bash_aliases
