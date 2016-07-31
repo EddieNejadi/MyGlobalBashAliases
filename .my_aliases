@@ -110,7 +110,7 @@ echo_colors ()
 }
 e() { emacs "$@" & }
 
-
+<script src="https://gist.github.com/SkyRocknRoll/5114846.js"></script>
 
 
 
