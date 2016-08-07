@@ -2,14 +2,14 @@
 #if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
 #        . ~/MyGlobalBashAliases/.my_aliases
 #fi
-# if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
-#         alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
-# else
-#         alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
-# fi
-#if [ -f ~/.bash_aliases ]; then
-#        . ~/.bash_aliases
-#fi
+if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
+        alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
+else
+        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
+fi
+if [ -f ~/.bash_aliases ]; then
+       . ~/.bash_aliases
+fi
 
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
@@ -24,11 +24,9 @@ alias ....="cd ../../.."
 alias .....="cd ../../../../"
 alias mydu="du -sch .[!.]* * | sort -h"
 alias mydut="du -sch .[!.]* * | sort -h | tail"
-# alias mysource="source ~/.bash_aliases && source ~/.bashrc && source ~/MyGlobalBashAliases/.my_aliases"
-# alias myaliasloc="vim ~/.bash_aliases && source ~/.bash_aliases"
-alias mysource="source ~/.bash_alias && source ~/.bashrc"
-alias myaliasloc="vim ~/.bash_alias && source ~/.bash_alias"
+alias mysource="source ~/.bash_aliases && source ~/.bashrc && source ~/MyGlobalBashAliases/.my_aliases"
 alias myps="ps aux | grep -i --color='auto'"
+alias myaliasloc="vim ~/.bash_aliases && source ~/.bash_aliases"
 alias findn="line && find . -iname"
 alias updatedb="sudo updatedb"
 alias ll='pwd && ls -htral'
@@ -50,10 +48,12 @@ alias mdr="mkdir"
 alias tolower="tr '[:upper:]' '[:lower:]'"
 alias toupper="tr '[:lower:]' '[:upper:]'"
 alias less="less -Ri"
-alias lsd='ls -ld */'
-alias lld='ls -ld */'
+alias lsd='ls -lad */ .*/'
+alias lld='ls -lad */ .*/'
 alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|warn"/`printf "\033[33mWARNING\033[0m"`/Ig'
+alias mypasm="ps aux --sort -rss"
 # alias 
+
 
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; }
