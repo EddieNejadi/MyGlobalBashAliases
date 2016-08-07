@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (powerline powerline-evil relative-line-numbers color-theme color-theme-solarized evil))))
+    (pylint powerline powerline-evil relative-line-numbers color-theme color-theme-solarized evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
