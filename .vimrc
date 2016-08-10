@@ -20,6 +20,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'shougo/vimproc.vim'
+Plugin 'jceb/vim-orgmode'
 imap jj <Esc>
 Plugin 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
