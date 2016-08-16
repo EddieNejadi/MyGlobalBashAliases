@@ -30,3 +30,5 @@ Plugin 'scrooloose/nerdcommenter'
 let g:NERDSpaceDelims = 1
 set relativenumber 
 set number 
+nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
+" nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
