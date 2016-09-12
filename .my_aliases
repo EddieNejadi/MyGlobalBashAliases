@@ -11,6 +11,7 @@ if [ -f ~/.bash_aliases ]; then
        . ~/.bash_aliases
 fi
 
+
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
 # Sourcing bash alias to remote ssh host
@@ -57,14 +58,19 @@ alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
 # My own functions
-rmtmp() { find -name '*~' -ls -delete; }
+rmtmp() { find -name '*~' -ls -delete; } 
+## Getting an alias in clipboard
+ac() 
+{ 
+    echo "${BASH_ALIASES[$1]}" | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'
+}
 myfindtype()
 {
-	echo -e '\e[1;34m=======================================================================\e[0m'
+    echo -e '\e[1;34m=======================================================================\e[0m'
         #echo $#
         #echo "find . -name ${args[0]} -exec grep ${args[1]} --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
         FIND_QUERY="find . -name \"*$1\" -exec grep -s \"$2\" -Hn --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
-	echo $FIND_QUERY
+    echo $FIND_QUERY
         eval $FIND_QUERY
 }
 myfind()
@@ -73,7 +79,7 @@ myfind()
         #echo $#
         #echo "find . -name ${args[0]} -exec grep ${args[1]} --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
         FIND_QUERY="find . -name \"$1\" -exec grep -s \"$2\" -Hn --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
- 	echo $FIND_QUERY
+    echo $FIND_QUERY
         eval $FIND_QUERY
 }
 myfindmm()
