@@ -44,3 +44,5 @@ set relativenumber
 set number 
 set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move next misspell ]s ; move previous misspell [s ; suggestion z=  
 
+nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
+" nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
