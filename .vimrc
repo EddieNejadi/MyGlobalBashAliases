@@ -16,6 +16,7 @@ Plugin 'FuzzyFinder'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-surround'
 Plugin 'eagletmt/neco-ghc'
+Plugin 'tpope/vim-repeat'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 Plugin 'eagletmt/ghcmod-vim'
@@ -27,6 +28,7 @@ imap jj <Esc>
 Plugin 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
-Plugin 'tpope/vim-repeat'
 set relativenumber 
 set number 
+nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
+" nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
