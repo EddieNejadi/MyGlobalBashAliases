@@ -32,3 +32,7 @@ set relativenumber
 set number 
 nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
 " nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
+set spelllang=en
+" set spellfile
+set term=screen-256color
+set clipboard=unnamedplus " Add clipboad copy and paste in linux by "+ register
