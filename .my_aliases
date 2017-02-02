@@ -11,6 +11,7 @@
        # . ~/.bash_aliases
 # fi
 
+
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
 # Sourcing bash alias to remote ssh host
@@ -62,18 +63,18 @@ alias myenv="env | grep -i --color"
 alias aa="alias"
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; } 
-## Getting an alias in clip board
+## Getting an alias in clipboard
 ac() 
 { 
-	echo "${BASH_ALIASES[$1]}" | xclip -sel clip && echo -e "\e[1;33mAliases copied to xclip: \e[1;32m${BASH_ALIASES[$1]} \e[0m"
+    echo "${BASH_ALIASES[$1]}" | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'
 }
 myfindtype()
 {
-	echo -e '\e[1;34m=======================================================================\e[0m'
+    echo -e '\e[1;34m=======================================================================\e[0m'
         #echo $#
         #echo "find . -name ${args[0]} -exec grep ${args[1]} --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
         FIND_QUERY="find . -name \"*$1\" -exec grep -s \"$2\" -Hn --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
-	echo $FIND_QUERY
+    echo $FIND_QUERY
         eval $FIND_QUERY
 }
 myfind()
@@ -82,7 +83,7 @@ myfind()
         #echo $#
         #echo "find . -name ${args[0]} -exec grep ${args[1]} --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
         FIND_QUERY="find . -name \"$1\" -exec grep -s \"$2\" -Hn --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
- 	echo $FIND_QUERY
+    echo $FIND_QUERY
         eval $FIND_QUERY
 }
 myfindmm()
