@@ -16,18 +16,22 @@ fi
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
 # Sourcing bash alias to remote ssh host
 # '"'"' is a single quotation with scaping
+# ll | tee >(head -n 1 1>&2) | grep Feb
+# ps aux | grep bash | grep -v root | grep -v grep | grep $USER | tr -s ' ' | cut -d ' ' -f 2| xargs -I proc /bin/bash -c "lsof -p proc && echo 'lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'"
+#
 alias myaliases="cat ~/MyGlobalBashAliases/.my_aliases | sed 's/#.*//'| grep 'alias ' | grep -v 'xclip\|myalias\|mysource\|========' | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | sed 's/$/;\n/' | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
 alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../../"
+alias tmux="tmux -2"
 alias mysource="source ~/.bash_aliases && source ~/.bashrc && source ~/MyGlobalBashAliases/.my_aliases"
 alias myps="ps aux | grep -i --color='auto'"
 alias myaliasloc="vim ~/.bash_aliases && source ~/.bash_aliases"
 alias findn="line && find . -iname"
-alias mydu="du -sch '.[!.]*' * | sort -h"
-alias mydut="du -sch '.[!.]*' * | sort -h | tail"
+alias mydu="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h"
+alias mydut="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h | tail"
 alias updatedb="sudo updatedb"
 alias ll='pwd && ls -htral --color=auto'
 alias mygrep='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto"'
@@ -39,6 +43,7 @@ alias mygrep5='echo -e "\e[1;33m================================================
 alias mygrep10='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 10 -A 10'
 alias mygrep20='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 20 -A 20'
 alias mygrepr='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnr --color="auto"'
+alias mygrepir='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnri --color="auto"'
 alias grepc="grep --color=always"
 alias gerp="grep"
 alias cd..='cd ..'
@@ -46,17 +51,21 @@ alias m='more'
 alias rm='rm -i'
 alias mv='mv -i'
 alias myuntar="tar -zxvf"
-alias mytar="tar -zcvf"
+alias mytar="tar -zcvf" # Example archive_name.tar.gz folder_to_compress
 alias mdr="mkdir"
 alias tolower="tr '[:upper:]' '[:lower:]'" # usage  echo TeSt | tolower 
 alias toupper="tr '[:lower:]' '[:upper:]'" # usage  echo TeSt | toupper
 alias less="less -Ri"
+alias ls="ls -1"
+alias ll='pwd && ls -htral --color=auto'
+alias lsl='pwd && ls -hla --color=auto'
 alias lsd='ls -lad */ .*/'
 alias lld='ls -lad */ .*/'
 alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|warn"/`printf "\033[33mWARNING\033[0m"`/Ig'
 alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
+alias aa="alias"
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; } 
 ## Getting an alias in clipboard
@@ -127,4 +136,15 @@ echo_colors ()
 e() { emacs "$@" & }
 
 
+# Kill all running containers.
+alias dockerkillall='docker kill $(docker ps -q)'
+
+# Delete all stopped containers.
+alias dockercleanc='printf "\n>>> Deleting stopped containers\n\n" && docker rm $(docker ps -a -q)'
+
+# Delete all untagged images.
+alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -q -f dangling=true)'
+
+# Delete all stopped containers and untagged images.
+alias dockerclean='dockercleanc || true && dockercleani'
 

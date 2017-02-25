@@ -34,7 +34,9 @@ Plugin 'Shougo/unite.vim' " Added advanced file browser
 Plugin 'Valloric/YouCompleteMe' " Tab complete
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/nerdtree'
 
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
 colorscheme molokai
 imap jj <Esc>
 Plugin 'scrooloose/nerdcommenter'
@@ -46,3 +48,9 @@ set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move 
 
 nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
 " nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
+set spelllang=en
+" set spellfile
+set term=screen-256color
+set clipboard=unnamedplus " Add clipboad copy and paste in linux by "+ register
+cnoremap sudow w !sudo tee % >/dev/null
+cmap w!! w !sudo tee > /dev/null %
