@@ -26,9 +26,9 @@ Plugin 'eagletmt/ghcmod-vim'
 Plugin 'shougo/vimproc.vim'
 Plugin 'jceb/vim-orgmode'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'vim-pandoc/vim-pandoc' " Added pandoc intgeration bundles
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'vim-pandoc/vim-pandoc-after'
+" Plugin 'vim-pandoc/vim-pandoc' " Added pandoc intgeration bundles
+" Plugin 'vim-pandoc/vim-pandoc-syntax'
+" Plugin 'vim-pandoc/vim-pandoc-after'
 Plugin 'dhruvasagar/vim-table-mode' " Added table mode for creating table.
 Plugin 'Shougo/unite.vim' " Added advanced file browser
 Plugin 'Valloric/YouCompleteMe' " Tab complete
@@ -54,3 +54,43 @@ set term=screen-256color
 set clipboard=unnamedplus " Add clipboad copy and paste in linux by "+ register
 cnoremap sudow w !sudo tee % >/dev/null
 cmap w!! w !sudo tee > /dev/null %
+cmap nn set norelativenumber <bar> set nonumber
+cmap ny set relativenumber <bar> set number
+
+" Transparent editing of gpg encrypted files.
+" By Wouter Hanegraaff
+augroup encrypted
+  au!
+
+  " First make sure nothing is written to ~/.viminfo while editing
+  " an encrypted file.
+  autocmd BufReadPre,FileReadPre *.gpg set viminfo=
+  " We don't want a various options which write unencrypted data to disk
+  autocmd BufReadPre,FileReadPre *.gpg set noswapfile noundofile nobackup
+
+  " Switch to binary mode to read the encrypted file
+  autocmd BufReadPre,FileReadPre *.gpg set bin
+  autocmd BufReadPre,FileReadPre *.gpg let ch_save = &ch|set ch=2
+  " (If you use tcsh, you may need to alter this line.)
+
+  " autocmd BufReadPost,FileReadPost *.gpg '[,']!gpg --decrypt 2> /dev/null
+  autocmd BufReadPost,FileReadPost *.gpg '[,']!~/MyGlobalBashAliases/gpg.sh --decrypt
+
+  " Switch to normal mode for editing
+  autocmd BufReadPost,FileReadPost *.gpg set nobin
+  autocmd BufReadPost,FileReadPost *.gpg let &ch = ch_save|unlet ch_save
+  autocmd BufReadPost,FileReadPost *.gpg execute ":doautocmd BufReadPost " . expand("%:r")
+
+  " Convert all text to encrypted text before writing
+  " (If you use tcsh, you may need to alter this line.)
+  
+  " autocmd BufWritePre,FileWritePre *.gpg '[,']!gpg --default-recipient-self -ae 2>/dev/null
+  autocmd BufWritePre,FileWritePre *.gpg '[,']!~/MyGlobalBashAliases/gpg.sh --default-recipient-self -ae
+  " Undo the encryption so we are back in the normal text, directly
+  " after the file has been written.
+  autocmd BufWritePost,FileWritePost *.gpg u
+augroup END
+
+
+
+
