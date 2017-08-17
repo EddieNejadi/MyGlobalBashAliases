@@ -11,7 +11,6 @@ if [ -f ~/.bash_aliases ]; then
        . ~/.bash_aliases
 fi
 
-
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
 # Sourcing bash alias to remote ssh host
@@ -20,20 +19,21 @@ fi
 # ps aux | grep bash | grep -v root | grep -v grep | grep $USER | tr -s ' ' | cut -d ' ' -f 2| xargs -I proc /bin/bash -c "lsof -p proc && echo 'lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'"
 #
 alias myaliases="cat ~/MyGlobalBashAliases/.my_aliases | sed 's/#.*//'| grep 'alias ' | grep -v 'xclip\|myalias\|mysource\|========' | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | sed 's/$/;\n/' | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
-alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
+alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'" # you might try 2>&1 before copy
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../../"
 alias tmux="tmux -2"
+alias assh="eval \`ssh-agent\` && ssh-add"
 alias mysource="source ~/.bash_aliases && source ~/.bashrc && source ~/MyGlobalBashAliases/.my_aliases"
-alias myps="ps aux | grep -i --color='auto'"
+alias myps="ps aux | grep -v grep | grep -i --color='auto'"
+alias mypsm="ps aux --sort -rss"
 alias myaliasloc="vim ~/.bash_aliases && source ~/.bash_aliases"
 alias findn="line && find . -iname"
 alias mydu="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h"
 alias mydut="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h | tail"
 alias updatedb="sudo updatedb"
-alias ll='pwd && ls -htral --color=auto'
 alias mygrep='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto"'
 alias mygrepc='grep -IHn --color="always"'
 alias mygrepi='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHni --color="auto"'
@@ -60,18 +60,36 @@ alias ls="ls -1"
 alias ll='pwd && ls -htral --color=auto'
 alias lsl='pwd && ls -hla --color=auto'
 alias lsd='ls -lad */ .*/'
-alias lld='ls -lad */ .*/'
+alias lld='ls -lad --color */ .*/'
 alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|warn"/`printf "\033[33mWARNING\033[0m"`/Ig'
-alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
 alias aa="alias"
+alias anp="ansible-playbook"
+alias anph="ansible-playbook -i hosts"
+# alias fullname="getent passwd `whoami` | cut -d ':' -f 5"
+alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
+alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; } 
+fname()
+{
+	echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$1 | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $1 | cut -d ':' -f 5 || echo ''
+}
 ## Getting an alias in clipboard
 ac() 
 { 
     echo "${BASH_ALIASES[$1]}" | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'
+}
+mknote()
+{
+    FILENAME="$1.md"
+    if [ ! -f ${FILENAME} ]; then  
+	touch ${FILENAME} && echo '% '$1 | tr -s "_" " " >> ${FILENAME} && echo '% '$(getent passwd `whoami` | cut -d ":" -f 5) >> ${FILENAME} && echo '% '$(date "+%B %d, %Y") >> ${FILENAME}
+	cat ${FILENAME}
+    else
+	echo "Note file with name ${FILENAME} is already exists"
+    fi
 }
 myfindtype()
 {
@@ -147,4 +165,6 @@ alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(
 
 # Delete all stopped containers and untagged images.
 alias dockerclean='dockercleanc || true && dockercleani'
+
+
 
