@@ -1,6 +1,6 @@
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
 " set rtp+=/usr/lib/python3.5/site-packages/powerline/bindings/vim/
-let $PYTHONPATH='/usr/lib/python3.5/site-packages'
+let $PYTHONPATH='/usr/lib/python3.6/site-packages'
 
 set laststatus=2
 set t_Co=256
@@ -36,6 +36,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
 
+map <C-n> :NERDTreeToggle<CR>
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 colorscheme molokai
 imap jj <Esc>
