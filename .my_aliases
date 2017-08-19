@@ -72,6 +72,10 @@ alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cu
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; } 
+srm() 
+{
+	shred -z -u $@
+}
 fname()
 {
 	echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$1 | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $1 | cut -d ':' -f 5 || echo ''
