@@ -2,14 +2,14 @@
 #if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
 #        . ~/MyGlobalBashAliases/.my_aliases
 #fi
-if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
-       alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
-else
-       alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
-fi
-if [ -f ~/.bash_aliases ]; then
-       . ~/.bash_aliases
-fi
+# if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
+#       alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
+# else
+#        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
+# fi
+# if [ -f ~/.bash_aliases ]; then
+#        . ~/.bash_aliases
+# fi
 
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
@@ -76,7 +76,7 @@ srm()
 {
 	shred -z -u $@
 }
-function assh () {
+assh () {
   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
   if ssh-add -l 2&>1 > /dev/null; then
     echo Found working SSH Agent:
