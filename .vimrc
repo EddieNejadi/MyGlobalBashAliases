@@ -1,6 +1,7 @@
+" set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
-" set rtp+=/usr/lib/python3.5/site-packages/powerline/bindings/vim/
-let $PYTHONPATH='/usr/lib/python3.6/site-packages'
+" let $PYTHONPATH='/usr/lib/python3.5/site-packages'
+let $PYTHONPATH='/usr/lib/python3/site-packages'
 
 set laststatus=2
 set t_Co=256
@@ -29,14 +30,17 @@ Plugin 'flazz/vim-colorschemes'
 " Plugin 'vim-pandoc/vim-pandoc' " Added pandoc intgeration bundles
 " Plugin 'vim-pandoc/vim-pandoc-syntax'
 " Plugin 'vim-pandoc/vim-pandoc-after'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dhruvasagar/vim-table-mode' " Added table mode for creating table.
 Plugin 'Shougo/unite.vim' " Added advanced file browser
-Plugin 'Valloric/YouCompleteMe' " Tab complete
+" Plugin 'Valloric/YouCompleteMe' " Tab complete
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
+" Plugin 'pearofducks/ansible-vim'
+Bundle 'chase/vim-ansible-yaml'
 
-map <C-n> :NERDTreeToggle<CR>
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 colorscheme molokai
 imap jj <Esc>
@@ -46,6 +50,8 @@ let g:NERDSpaceDelims = 1
 set relativenumber 
 set number 
 set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move next misspell ]s ; move previous misspell [s ; suggestion z=  
+filetype plugin indent on
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
 
 nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
 " nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
@@ -53,11 +59,11 @@ set spelllang=en
 " set spellfile
 set term=screen-256color
 set clipboard=unnamedplus " Add clipboad copy and paste in linux by "+ register
+set mouse=a
 cnoremap sudow w !sudo tee % >/dev/null
 cmap w!! w !sudo tee > /dev/null %
 cmap nn set norelativenumber <bar> set nonumber
 cmap ny set relativenumber <bar> set number
-
 " Transparent editing of gpg encrypted files.
 " By Wouter Hanegraaff
 augroup encrypted
@@ -91,7 +97,3 @@ augroup encrypted
   " after the file has been written.
   autocmd BufWritePost,FileWritePost *.gpg u
 augroup END
-
-
-
-
