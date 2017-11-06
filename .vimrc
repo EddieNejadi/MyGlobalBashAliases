@@ -1,7 +1,7 @@
 " set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
 " let $PYTHONPATH='/usr/lib/python3.5/site-packages'
-let $PYTHONPATH='/usr/lib/python3/site-packages'
+let $PYTHONPATH='/usr/lib/python3/dist-packages'
 
 set laststatus=2
 set t_Co=256
@@ -64,6 +64,11 @@ cnoremap sudow w !sudo tee % >/dev/null
 cmap w!! w !sudo tee > /dev/null %
 cmap nn set norelativenumber <bar> set nonumber
 cmap ny set relativenumber <bar> set number
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+nnoremap <C-W>E <C-W>=
+nnoremap <C-W>e <C-W><C-W><C-W>\|<C-W>_ 
 " Transparent editing of gpg encrypted files.
 " By Wouter Hanegraaff
 augroup encrypted
