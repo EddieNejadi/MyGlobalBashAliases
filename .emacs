@@ -13,7 +13,7 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    (quote
-    (pylint powerline powerline-evil relative-line-numbers color-theme color-theme-solarized evil))))
+    (0blayout parenface-reversion ox-twbs epresent pylint powerline powerline-evil relative-line-numbers color-theme color-theme-solarized evil))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -50,5 +50,6 @@
 ;; Enable org-mode
 (require 'org)
 ;; Make org-mode work with files ending in .org
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 ;; The above is the default in recent emacsen
+
