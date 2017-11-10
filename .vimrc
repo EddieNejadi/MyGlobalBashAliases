@@ -51,7 +51,7 @@ set relativenumber
 set number 
 set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move next misspell ]s ; move previous misspell [s ; suggestion z=  
 filetype plugin indent on
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
+autocmd FileType yml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
 
 nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
 " nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
