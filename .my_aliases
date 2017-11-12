@@ -103,7 +103,7 @@ get_ff_info_timeout ()
 	if [ -f /usr/bin/timeout ]; then
 		/usr/bin/timeout 0.5 bash -c get_ff_info || echo "XXX:xxx"
 	else
-		echo "NoteAvailable"
+		echo "NotAvailable"
 	fi
 }
 setps ()

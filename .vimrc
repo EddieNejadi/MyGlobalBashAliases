@@ -1,7 +1,8 @@
 " set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
 " let $PYTHONPATH='/usr/lib/python3.5/site-packages'
-let $PYTHONPATH='/usr/lib/python3/dist-packages'
+" let $PYTHONPATH='/usr/lib/python3/dist-packages'
+let $PYTHONPATH='/usr/lib/python3.6/site-packages'
 
 set laststatus=2
 set t_Co=256
