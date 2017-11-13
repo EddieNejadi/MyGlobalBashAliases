@@ -32,6 +32,10 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../../"
 alias tmux="tmux -2"
+alias ovim="vim -o"
+alias oovim="vim -O"
+alias vvim="vim -O"
+alias pvim="vim -p"
 alias mysource="source ~/.bash_aliases && source ~/.bashrc && source ~/MyGlobalBashAliases/.my_aliases"
 alias myps="ps aux | grep -v grep | grep -i --color='auto'"
 alias mypsu="ps aux | grep -v grep | grep -i $USER --color=always | grep -i --color='auto'"
@@ -107,7 +111,7 @@ get_ff_info_timeout ()
 	if [ -f /usr/bin/timeout ]; then
 		/usr/bin/timeout 0.5 bash -c get_ff_info || echo "XXX:xxx"
 	else
-		echo "NoteAvailable"
+		echo "NotAvailable"
 	fi
 }
 setps ()
@@ -116,7 +120,7 @@ setps ()
 		PS1=$PS_ORG
 		export -f get_ff_info
 		PS_ORG=$PS1
-		PS1="\[\033[1;31m\]\u@\h\[\033[32m\] \w:\[\033[1;34m\]\[\033[1;36m\]\$(get_ff_info_timeout):\[\033[1;33m\]\$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')b\[\033[0m\] -> \[\033[0m\]"
+		PS1="\[\033[1;31m\]\u\[\033[1;33m\]@\[\033[1;34m\]\h\[\033[32m\] \w:\[\033[1;34m\]\[\033[1;36m\]\$(get_ff_info_timeout):\[\033[1;33m\]\$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')b\[\033[0m\] -> \[\033[0m\]"
 	fi
 }
 setps

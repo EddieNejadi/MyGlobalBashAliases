@@ -1,7 +1,8 @@
 " set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
 " let $PYTHONPATH='/usr/lib/python3.5/site-packages'
-let $PYTHONPATH='/usr/lib/python3/dist-packages'
+" let $PYTHONPATH='/usr/lib/python3/dist-packages'
+let $PYTHONPATH='/usr/lib/python3.6/site-packages'
 
 set laststatus=2
 set t_Co=256
@@ -51,7 +52,7 @@ set relativenumber
 set number 
 set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move next misspell ]s ; move previous misspell [s ; suggestion z=  
 filetype plugin indent on
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
+autocmd FileType yml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
 
 nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
 " nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
