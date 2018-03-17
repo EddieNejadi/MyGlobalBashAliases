@@ -24,7 +24,8 @@
 # '"'"' is a single quotation with scaping
 # ll | tee >(head -n 1 1>&2) | grep Feb
 # ps aux | grep bash | grep -v root | grep -v grep | grep $USER | tr -s ' ' | cut -d ' ' -f 2| xargs -I proc /bin/bash -c "lsof -p proc && echo 'lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'"
-#
+# gzip < file > file.gz  gzip file without deleting it
+# 
 alias myaliases="cat ~/MyGlobalBashAliases/.my_aliases | sed 's/#.*//'| grep 'alias ' | grep -v 'xclip\|myalias\|mysource\|========' | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | sed 's/$/;\n/' | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
 alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'" # you might try 2>&1 before copy
 alias ..="cd .."
@@ -32,6 +33,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../../"
 alias tmux="tmux -2"
+alias tvim="tmux new-session 'vim'  \;"
 alias ovim="vim -o"
 alias oovim="vim -O"
 alias vvim="vim -O"
@@ -98,6 +100,13 @@ assh () {
   eval `ssh-agent` && ssh-add
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
+mysed () {
+	if [[ -z "$1" || -z "$2" ||  -z "$3" ]]; then
+		echo "Enter start line number and end line number followed by Filename"
+	else
+		sed -n -e "$1,$2 p" -e "$2 q" "${@:3}"
+	fi
+}
 function get_ff_info
 {
 	# sleep 2
@@ -109,7 +118,7 @@ function get_ff_info
 get_ff_info_timeout ()
 {
 	if [ -f /usr/bin/timeout ]; then
-		/usr/bin/timeout 0.5 bash -c get_ff_info || echo "XXX:xxx"
+		/usr/bin/timeout 1 bash -c get_ff_info || echo "XXX:xxx"
 	else
 		echo "NotAvailable"
 	fi

@@ -1,8 +1,8 @@
-" set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
+set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
 " let $PYTHONPATH='/usr/lib/python3.5/site-packages'
 " let $PYTHONPATH='/usr/lib/python3/dist-packages'
-let $PYTHONPATH='/usr/lib/python3.6/site-packages'
+" let $PYTHONPATH='/usr/lib/python3.6/site-packages'
 
 set laststatus=2
 set t_Co=256
@@ -35,7 +35,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dhruvasagar/vim-table-mode' " Added table mode for creating table.
 Plugin 'Shougo/unite.vim' " Added advanced file browser
-Plugin 'Valloric/YouCompleteMe' " Tab complete
+" Plugin 'Valloric/YouCompleteMe' " Tab complete
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
@@ -53,6 +53,7 @@ set number
 set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move next misspell ]s ; move previous misspell [s ; suggestion z=  
 filetype plugin indent on
 autocmd FileType yml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
 
 nnoremap <S-Tab> :bnext<CR>:redraw<CR>:ls<CR>
 " nnoremap <A-p> :bprevious<CR>:redraw<CR>:ls<CR>
@@ -70,6 +71,7 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 nnoremap <C-W>E <C-W>=
 nnoremap <C-W>e <C-W><C-W><C-W>\|<C-W>_ 
+map YP \c<space>\|yyp\|\c<space> 
 " Transparent editing of gpg encrypted files.
 " By Wouter Hanegraaff
 augroup encrypted
