@@ -72,6 +72,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 nnoremap <C-W>E <C-W>=
 nnoremap <C-W>e <C-W><C-W><C-W>\|<C-W>_ 
 map YP \c<space>\|yyp\|\c<space> 
+nnoremap <C-V><C-V> :read !xclip -o 
 " Transparent editing of gpg encrypted files.
 " By Wouter Hanegraaff
 augroup encrypted
