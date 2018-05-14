@@ -27,7 +27,7 @@
 # gzip < file > file.gz  gzip file without deleting it
 # 
 #
-# Search the network for connected users
+# Search the network for connected users 
 # nmap -sL 192.168.1.* | grep \(1.*
 #
 alias myaliases="cat ~/MyGlobalBashAliases/.my_aliases | sed 's/#.*//'| grep 'alias ' | grep -v 'xclip\|myalias\|mysource\|========' | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | sed 's/$/;\n/' | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
@@ -105,6 +105,23 @@ assh () {
   eval `ssh-agent` && ssh-add
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
+uenv(){
+	local v
+	while read v; do
+		if [[ $v == -* ]]; then
+			unset ${v/#-/}
+			# echo ${v/#-/}
+		else
+			v=${v/=/=\"}
+			v=${v/%/\"}
+			eval export $v
+			# echo $v
+		fi
+	done < <(tmux show-environment | grep -v SSH)
+	assh
+
+}
+
 mysed () {
 	if [[ -z "$1" || -z "$2" ||  -z "$3" ]]; then
 		echo "Enter start line number and end line number followed by Filename"
@@ -134,7 +151,7 @@ setps ()
 		PS1=$PS_ORG
 		export -f get_ff_info
 		PS_ORG=$PS1
-		PS1="\[\033[1;31m\]\u\[\033[1;33m\]@\[\033[1;34m\]\h\[\033[32m\] \w:\[\033[1;34m\]\[\033[1;36m\]\$(get_ff_info_timeout):\[\033[1;33m\]\$(/bin/ls -lah 2> /dev/null | /bin/grep -m 1 total | /bin/sed 's/total //')b\[\033[0m\] -> \[\033[0m\]"
+		PS1="\[\033[1;31m\]\u\[\033[1;33m\]@\[\033[1;34m\]\h\[\033[32m\] \w:\[\033[1;34m\]\[\033[1;36m\]\$(get_ff_info_timeout):\[\033[1;33m\]\$(/bin/ls -lah | /bin/grep -m 1 total | /bin/sed 's/total //')b\[\033[0m\] -> \[\033[0m\]"
 	fi
 }
 setps
