@@ -52,6 +52,7 @@ let g:NERDSpaceDelims = 1
 set relativenumber 
 set number 
 set spell spelllang=en_us " Added spell checking => Disable :set nospell ; move next misspell ]s ; move previous misspell [s ; suggestion z=  
+set omnifunc=syntaxcompelete#compelete
 filetype plugin indent on
 autocmd FileType yml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 ts=2 sts=2 sw=2 expandtab
@@ -77,6 +78,9 @@ map YP \c<space>\|yyp\|\c<space>
 nnoremap <C-V><C-V> :read !xclip -o 
 command! DiffOrig rightbelow vertical new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 nnoremap <C-W>d :DiffOrig 
+set pastetoggle=<F5>   " set: paste   set: nopaste
+" execute the current file
+nnoremap <F9> :!%:p  
 
 " Transparent editing of gpg encrypted files.
 " By Wouter Hanegraaff
