@@ -31,16 +31,18 @@
 #
 alias myaliases="cat ~/MyGlobalBashAliases/.my_aliases | sed 's/#.*//'| grep 'alias ' | grep -v 'xclip\|myalias\|mysource\|========' | tr '\n' ' ' | sed 's/ alias/ ; alias/g' | sed 's/$/;\n/' | xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'"
 alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'" # you might try 2>&1 before copy
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../../"
+alias ..="pushd .."
+alias ...="pushd ../.."
+alias ....="pushd ../../.."
+alias .....="pushd ../../../../"
 alias tmux="tmux -2"
 alias tvim="tmux new-session 'vim'  \;"
 alias ovim="vim -o"
 alias oovim="vim -O"
 alias vvim="vim -O"
 alias pvim="vim -p"
+alias dvim="vimdiff"
+alias sshp="ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no"
 alias mysource="source ~/.bash_aliases && source ~/.bashrc && source ~/MyGlobalBashAliases/.my_aliases"
 alias myps="ps aux | grep -v grep | grep -i --color='auto'"
 alias mypsu="ps aux | grep -v grep | grep -i $USER --color=always | grep -i --color='auto'"
@@ -50,21 +52,24 @@ alias findn="line && find . -iname"
 alias mydu="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h"
 alias mydut="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h | tail"
 alias updatedb="sudo updatedb"
-alias mygrep='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto"'
+alias mygrep='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" --exclude-dir=.hg'
 alias mygrepc='grep -IHn --color="always"'
-alias mygrepi='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHni --color="auto"'
+alias mygrepi='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHni --color="auto" --exclude-dir=.hg'
 alias mygrep1='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -C 1'
 alias mygrep3='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 3 -A 3'
 alias mygrep5='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 5 -A 5'
 alias mygrep10='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 10 -A 10'
 alias mygrep20='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 20 -A 20'
-alias mygrepr='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnr --color="auto"'
-alias mygrepir='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnri --color="auto"'
+alias mygrepr='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnr --color="auto" --exclude-dir=.hg'
+alias mygrepir='echo -e "\e[2;33m=======================================================================\e[0m" && grep -IHnri --color="auto" --exclude-dir=.hg'
 alias grepc="grep --color=always"
 alias gerp="grep"
-alias cd..='cd ..'
+alias cd..='pushd ..'
 alias m='more'
 alias rm='rm -i'
+alias rmf='rm -f'
+alias rmd='rm -rf'
+alias rmpyc="find . -name '*.pyc' -type f -ls -delete;"
 alias mv='mv -i'
 alias myuntar="tar -zxvf"
 alias mytar="tar -zcvf" # Example archive_name.tar.gz folder_to_compress
@@ -77,18 +82,28 @@ alias ll='pwd && ls -htral --color=auto'
 alias lsl='pwd && ls -hla --color=auto'
 alias lsd='ls -lad */ .*/'
 alias lld='ls -lad --color */ .*/'
+alias pd="pushd"
+alias po="popd"
+alias dir="dirs -v -l"
+alias cd="pushd"
+alias "cd-"="pushd"
+alias "cdh"="pushd ~"
 alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|warn"/`printf "\033[33mWARNING\033[0m"`/Ig'
 alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
 alias aa="alias"
-alias anp="ansible-playbook"
-alias anph="ansible-playbook -i hosts"
+alias aph="ansible-playbook -i hosts"
+alias ap="ansible-playbook"
+alias apc="ansible-playbook --syntax-check"
+alias aps="ANSIBLE_PIPELINING=TRUE ansible-playbook"
+alias app="ansible -m ping"
 # alias fullname="getent passwd `whoami` | cut -d ':' -f 5"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; } 
+rm1() { find -name '1' -type f  -ls -delete; }
 srm() 
 {
 	shred -z -u $@
@@ -103,8 +118,45 @@ assh () {
   eval `ssh-agent` && ssh-add
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
 }
+uenv(){
+	local v
+	while read v; do
+		if [[ $v == -* ]]; then
+			unset ${v/#-/}
+			# echo ${v/#-/}
+		else
+			v=${v/=/=\"}
+			v=${v/%/\"}
+			eval export $v
+			# echo $v
+		fi
+	done < <(tmux show-environment | grep -v SSH)
+	assh
+
+}
+ue()
+{
+uenv
+}
+cpuinfo () {
+grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print "Total cpu usage:" usage "%"}'
+(
+own=$(id -nu)
+
+for user in $(getent passwd | awk -F ":" '{print $1}' | sort -u)
+do
+	# print other user's CPU usage in parallel but skip own one because
+	# spawning many processes will increase our CPU usage significantly
+	if [ "$user" = "$own" ]; then continue; fi
+	(top -b -n 1 -u "$user" | awk -v user=$user 'NR>7 { sum += $9; } END { if (sum > 0.0) print user, sum; }') & 
+done
+wait
+# print own CPU usage after all spawned processes completed
+top -b -n 1 -u "$own" | awk -v user=$own 'NR>7 { sum += $9; } END { print user, sum; }'
+) 2>&1 | egrep -v "^\[" | sort -nrk 2
+}
 mysed () {
-	if [[ -z "$1" || -z "$2" ||  -z "$3" ]]; then
+	if [[ -z "$1" || -z "$2" ||  -z "$3"  || "$1" == "-h" || "$1" == "--help" ]]; then
 		echo "Enter start line number and end line number followed by Filename"
 	else
 		sed -n -e "$1,$2 p" -e "$2 q" "${@:3}"
