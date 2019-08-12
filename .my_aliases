@@ -7,9 +7,9 @@ if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; the
 else
        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
 fi
-if [ -f ~/.bash_aliases ]; then
-       . ~/.bash_aliases
-fi
+#if [ -f ~/.bash_aliases ]; then
+#       . ~/.bash_aliases
+#fi
 #       alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
 # else
 #        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
@@ -105,7 +105,7 @@ alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cu
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
 rmtmp() { find -name '*~' -ls -delete; } 
-rm1() { find -name '1' -type f  -ls -delete; }
+rm1() { find -name '1' -type f -size 0 -ls -delete; }
 srm() 
 {
 	shred -z -u $@
@@ -115,10 +115,12 @@ assh () {
   if ssh-add -l 2&>1 > /dev/null; then
     echo Found working SSH Agent:
     ssh-add -l
-    return
+    # return
+  else 
+    eval `ssh-agent` && ssh-add
   fi
-  eval `ssh-agent` && ssh-add
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
+  find . -maxdepth 1 -name '1' -type f -size 0 -ls -delete; 
 }
 uenv(){
 	local v
@@ -225,11 +227,16 @@ myfindtype()
 myfind()
 {
         echo -e '\e[1;34m=======================================================================\e[0m'
-        #echo $#
-        #echo "find . -name ${args[0]} -exec grep ${args[1]} --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
-        FIND_QUERY="find . -name \"$1\" -exec grep -s \"$2\" -Hn --color=auto {} \; -exec echo -e '\e[1;33m=======================================================================\e[0m' {} \;"
-    echo $FIND_QUERY
-        eval $FIND_QUERY
+        if [[ "$2" ]]; then 
+		echo "hit couple"
+		find . -iname "*$1*" -exec grep -s "$2" --color=auto {} \;
+    	else if [[ "$1" ]]; then
+        	echo "hit single"
+		find . -iname "*$1*"
+	else
+		echo "Enter: \$1 filename_pattern and optional \$2 grep_pattern"
+	fi
+	fi
 }
 myfindmm()
 {
