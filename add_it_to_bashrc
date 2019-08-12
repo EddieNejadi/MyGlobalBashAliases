@@ -1,0 +1,25 @@
+if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
+       . ~/MyGlobalBashAliases/.my_aliases
+fi
+if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; then
+      alias myalias="vim ~/MyGlobalBashAliases/.my_aliases && source ~/MyGlobalBashAliases/.my_aliases"   
+else
+       alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
+fi
+if [ -f ~/.bash_aliases ]; then
+       . ~/.bash_aliases
+fi
+
+shopt -s cdspell
+
+# Bash history setting
+shopt -s histappend # add time stamp to history
+HISTFILESIZE=1000000 # history file size
+HISTSIZE=1000000 # number of history entry
+HISTCONTROL=ignoreboth # ingnore  duplicate command 
+HISTIGNORE='bg:fg:history' # ignore unimportant command
+HISTTIMEFORMAT='%F %T ' # time stamp format
+shopt -s cmdhist # save multiline commands to one line
+PROMPT_COMMAND='history -a' # store hitory immediately 
+
+force_color_prompt=no
