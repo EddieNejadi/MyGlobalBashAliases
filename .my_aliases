@@ -98,14 +98,17 @@ alias anp="ansible-playbook"
 alias apc="ansible-playbook --syntax-check"
 alias aps="ANSIBLE_PIPELINING=TRUE ansible-playbook"
 alias app="ansible -m ping"
+alias anv="ansible-vault"
+alias apv="ansible-vault"
 alias anph="ansible-playbook -i hosts"
 alias sshp="ssh -o PreferredAuthentications=password"
 # alias fullname="getent passwd `whoami` | cut -d ':' -f 5"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
-rmtmp() { find -name '*~' -ls -delete; } 
-rm1() { find -name '1' -type f -size 0 -ls -delete; }
+rmtmp() { find . -name '*~' -ls -delete; } 
+rm1() { find . -name '1' -type f \( -size 0 -or -size 141c \) -ls -delete; }
+rm1a() { find . -name '1' -type f -ls -delete; }
 srm() 
 {
 	shred -z -u $@
@@ -121,6 +124,14 @@ assh () {
   fi
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
   find . -maxdepth 1 -name '1' -type f -size 0 -ls -delete; 
+}
+initssh() {
+  export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
+  if ssh-add -l 2&>1 > /dev/null; then
+    echo Found working SSH Agent:
+    ssh-add -l
+  fi
+  find . -maxdepth 1 -name '1' -type f -size 0 -ls -delete > /dev/null
 }
 uenv(){
 	local v
