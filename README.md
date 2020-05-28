@@ -19,6 +19,17 @@ ssh-copy-id user@host  # Add your key to One host in each environment (Dev, Test
 eval `ssh-agent` && ssh-add
 ```
 
+### vim 
+
+1. Cd to home direcoty and run
+
+```bash
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
+
+2. Launch vim and run :PluginInstall
+
+
 ## Installation
 
 ### All distribution
@@ -30,5 +41,8 @@ eval `ssh-agent` && ssh-add
 ### Redhat
 
 1. ```dnf install bind-utils``` # for dig application on redhat family os
+
+
+
 
 
