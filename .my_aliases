@@ -91,6 +91,7 @@ alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|war
 alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
+alias mygitl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit -33 --author='Mahdi Abdinejadi' --date=local"
 alias aa="alias"
 alias aph="ansible-playbook -i hosts"
 alias ap="ansible-playbook"
@@ -124,6 +125,14 @@ assh () {
   fi
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
   find . -maxdepth 1 -name '1' -type f -size -141c -ls -delete; 
+}
+initssh() {
+  export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
+  if ssh-add -l 2&>1 > /dev/null; then
+    echo Found working SSH Agent:
+    ssh-add -l
+  fi
+  find . -maxdepth 1 -name '1' -type f -size 0 -ls -delete > /dev/null
 }
 initssh() {
   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
