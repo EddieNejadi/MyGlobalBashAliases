@@ -110,6 +110,13 @@ alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 rmtmp() { find . -name '*~' -ls -delete; } 
 rm1() { find . -name '1' -type f \( -size 0 -or -size 141c \) -ls -delete; }
 rm1a() { find . -name '1' -type f -ls -delete; }
+rml() {
+	if [[ -z "$1" || -z "$2" ]]; then
+		echo "Enter line number to remove and file name"
+	else
+		sed -i ''$1'd' $2
+	fi
+}
 srm() 
 {
 	shred -z -u $@
