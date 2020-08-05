@@ -7,6 +7,9 @@ if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; the
 else
        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
 fi
+if [ -f ~/.ssh/secrets ]; then
+       . ~/.ssh/secrets
+fi
 #if [ -f ~/.bash_aliases ]; then
 #       . ~/.bash_aliases
 #fi
