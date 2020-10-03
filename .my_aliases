@@ -110,6 +110,39 @@ alias sshp="ssh -o PreferredAuthentications=password"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
+tsave() {
+  local d=$'\t'
+  tmux list-windows -a -F "#S${d}#W${d}#{pane_current_path}" > ~/.tmux-session
+}
+
+terminal_size() {
+  stty size 2>/dev/null | awk '{ printf "-x%d -y%d", $2, $1 }'
+}
+tsession_exists() {
+  tmux has-session -t "$1" 2>/dev/null
+}
+trestore() {
+  tmux start-server
+  local count=0
+  local dimensions="$(terminal_size)"
+
+  while IFS=$'\t' read session_name window_name dir; do
+    if [[ -d "$dir" && $window_name != "log" && $window_name != "man" ]]; then
+    #   session_exists = $(tmux has-session -t "$session_name" 2>/dev/null)
+      if tsession_exists "$session_name"; then
+      # if $session_exists; then
+        # add_window "$session_name" "$window_name" "$dir"
+        tmux new-window -d -t "$session_name:" -n "$window_name" -c "$dir"
+      else
+        # new_session "$session_name" "$window_name" "$dir" "$dimensions"
+        cd "$dir" && tmux new-session -d -s "$session_name" -n "$window_name" $dimensions
+        count=$(( count + 1 ))
+      fi
+    fi
+  done < ~/.tmux-session
+
+  echo "restored $count sessions"
+}
 rmtmp() { find . -name '*~' -ls -delete; } 
 rm1() { find . -name '1' -type f \( -size 0 -or -size 141c \) -ls -delete; }
 rm1a() { find . -name '1' -type f -ls -delete; }
