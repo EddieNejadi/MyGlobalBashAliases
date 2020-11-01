@@ -32,6 +32,11 @@ fi
 #
 # nmap -sL 192.168.1.* | grep \(1.*
 #
+#### WSL ubunto on windows
+# export BROWSER=wslview
+# sudo ln -s $(which wslview) /usr/local/bin/xdg-open
+####
+
 alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'" # you might try 2>&1 before copy
 alias ..="pushd .."
 alias ...="pushd ../.."
