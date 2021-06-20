@@ -7,6 +7,9 @@ if [ -d ~/MyGlobalBashAliases ] && [ -f ~/MyGlobalBashAliases/.my_aliases ]; the
 else
        alias myalias="vim ~/.bash_aliases && source ~/.bash_aliases"
 fi
+if [ -f ~/.ssh/secrets ]; then
+       . ~/.ssh/secrets
+fi
 #if [ -f ~/.bash_aliases ]; then
 #       . ~/.bash_aliases
 #fi
@@ -29,6 +32,11 @@ fi
 #
 # nmap -sL 192.168.1.* | grep \(1.*
 #
+#### WSL ubunto on windows
+# export BROWSER=wslview
+# sudo ln -s $(which wslview) /usr/local/bin/xdg-open
+####
+
 alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'" # you might try 2>&1 before copy
 alias ..="pushd .."
 alias ...="pushd ../.."
@@ -72,6 +80,8 @@ alias rmpyc="find . -name '*.pyc' -type f -ls -delete;"
 alias mv='mv -i'
 alias myuntar="tar -zxvf"
 alias mytar="tar -zcvf" # Example archive_name.tar.gz folder_to_compress
+alias mychown="chown `id -u`:`id -g`"
+alias myschown="sudo chown `id -u`:`id -g`"
 alias mdr="mkdir"
 alias tolower="tr '[:upper:]' '[:lower:]'" # usage  echo TeSt | tolower 
 alias toupper="tr '[:lower:]' '[:upper:]'" # usage  echo TeSt | toupper
@@ -91,6 +101,7 @@ alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|war
 alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
+alias mygitl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit -33 --author='Mahdi Abdinejadi' --date=local"
 alias aa="alias"
 alias aph="ansible-playbook -i hosts"
 alias ap="ansible-playbook"
@@ -106,9 +117,49 @@ alias sshp="ssh -o PreferredAuthentications=password"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
+tsave() {
+  local d=$'\t'
+  tmux list-windows -a -F "#S${d}#W${d}#{pane_current_path}" > ~/.tmux-session
+}
+
+terminal_size() {
+  stty size 2>/dev/null | awk '{ printf "-x%d -y%d", $2, $1 }'
+}
+tsession_exists() {
+  tmux has-session -t "$1" 2>/dev/null
+}
+trestore() {
+  tmux start-server
+  local count=0
+  local dimensions="$(terminal_size)"
+
+  while IFS=$'\t' read session_name window_name dir; do
+    if [[ -d "$dir" && $window_name != "log" && $window_name != "man" ]]; then
+    #   session_exists = $(tmux has-session -t "$session_name" 2>/dev/null)
+      if tsession_exists "$session_name"; then
+      # if $session_exists; then
+        # add_window "$session_name" "$window_name" "$dir"
+        tmux new-window -d -t "$session_name:" -n "$window_name" -c "$dir"
+      else
+        # new_session "$session_name" "$window_name" "$dir" "$dimensions"
+        cd "$dir" && tmux new-session -d -s "$session_name" -n "$window_name" $dimensions
+        count=$(( count + 1 ))
+      fi
+    fi
+  done < ~/.tmux-session
+
+  echo "restored $count sessions"
+}
 rmtmp() { find . -name '*~' -ls -delete; } 
 rm1() { find . -name '1' -type f \( -size 0 -or -size 141c \) -ls -delete; }
 rm1a() { find . -name '1' -type f -ls -delete; }
+rml() {
+	if [[ -z "$1" || -z "$2" ]]; then
+		echo "Enter line number to remove and file name"
+	else
+		sed -i ''$1'd' $2
+	fi
+}
 srm() 
 {
 	shred -z -u $@
@@ -124,6 +175,14 @@ assh () {
   fi
   # echo Cannot find ssh agent - maybe you should reconnect and forward it?
   find . -maxdepth 1 -name '1' -type f -size -141c -ls -delete; 
+}
+initssh() {
+  export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
+  if ssh-add -l 2&>1 > /dev/null; then
+    echo Found working SSH Agent:
+    ssh-add -l
+  fi
+  find . -maxdepth 1 -name '1' -type f -size 0 -ls -delete > /dev/null
 }
 initssh() {
   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -user `whoami` -name agent\* -printf '%T@ %p\n' 2>/dev/null | sort -k 1nr | sed 's/^[^ ]* //' | head -n 1)
