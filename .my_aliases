@@ -68,7 +68,9 @@ alias mygrep5='echo -e "\e[1;33m================================================
 alias mygrep10='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 10 -A 10'
 alias mygrep20='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 20 -A 20'
 alias mygrepr='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnr --color="auto" --exclude-dir=.hg'
+alias mygreprc='grep -IHnr --color="always" --exclude-dir=.hg'
 alias mygrepir='echo -e "\e[2;33m=======================================================================\e[0m" && grep -IHnri --color="auto" --exclude-dir=.hg'
+alias mygrepirc='grep -IHnri --color="always" --exclude-dir=.hg'
 alias grepc="grep --color=always"
 alias gerp="grep"
 alias cd..='pushd ..'
