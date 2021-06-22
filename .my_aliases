@@ -252,7 +252,7 @@ get_ff_info_timeout ()
 }
 setps ()
 {
-	if [ -z $PS_ORG ]; then
+	if [[ -z $PS_ORG ]] && [[ ! -f ~/go/bin/powerline-go ]]; then
 		PS1=$PS_ORG
 		export -f get_ff_info
 		PS_ORG=$PS1
