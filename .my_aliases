@@ -300,11 +300,9 @@ myfind()
 {
         echo -e '\e[1;34m=======================================================================\e[0m'
         if [[ "$2" ]]; then 
-		echo "hit couple"
-		find . -iname "*$1*" -exec grep -s "$2" --color=auto {} \;
+		find . -not -path '*/\.git/*' -not -path '*/\.hg/*' -iname "*$1*" -exec grep -s "$2" --color=auto {} \;
     	else if [[ "$1" ]]; then
-        	echo "hit single"
-		find . -iname "*$1*"
+		find .  -not -path '*/\.git/*' -not -path '*/\.hg/*'  -iname "*$1*"
 	else
 		echo "Enter: \$1 filename_pattern and optional \$2 grep_pattern"
 	fi
