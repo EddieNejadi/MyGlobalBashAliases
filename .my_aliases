@@ -112,6 +112,8 @@ alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
 alias mygitl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit -33 --author='Mahdi Abdinejadi' --date=local"
+alias gtag="git describe --tags `git rev-list --tags --max-count=1`"
+alias gtags="git tag"
 alias aa="alias"
 alias aph="ansible-playbook -i hosts"
 alias ap="ansible-playbook"
