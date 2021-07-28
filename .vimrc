@@ -1,3 +1,5 @@
+" INSTALATION: git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"              in vim run :PluginInstall or :PluginUpdate
 " set rtp+=~/.local/lib/python2.6/site-packages/powerline/bindings/vim/ " dev environment
 " set rtp+=/usr/lib/python2.7/site-packages/powerline/bindings/vim/
 " let $PYTHONPATH='/usr/lib/python3.5/site-packages'
