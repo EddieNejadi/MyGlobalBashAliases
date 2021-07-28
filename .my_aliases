@@ -21,6 +21,12 @@ fi
 #        . ~/.bash_aliases
 # fi
 
+# Export latest node modules
+if [ -d /opt/nodejs/latest/bin/ ];then
+         echo "$PATH" | grep -q /opt/nodejs || export PATH=$PATH:/opt/nodejs/latest/bin 
+fi
+
+
 # Print stderr to null 2> /dev/null or in script exec 2> /dev/null
 # http://kvz.io/blog/2013/11/21/bash-best-practices/
 # Sourcing bash alias to remote ssh host
@@ -88,6 +94,8 @@ alias mdr="mkdir"
 alias tolower="tr '[:upper:]' '[:lower:]'" # usage  echo TeSt | tolower 
 alias toupper="tr '[:lower:]' '[:upper:]'" # usage  echo TeSt | toupper
 alias less="less -Ri"
+alias pwdp="pwd -P"
+alias pwp="pwdp"
 alias ls="ls -1"
 alias ll='pwd && ls -htral --color=auto'
 alias lsl='pwd && ls -hla --color=auto'
