@@ -112,8 +112,10 @@ alias mypsm="ps aux --sort -rss"
 alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
 alias mygitl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit -33 --author='Mahdi Abdinejadi' --date=local"
-alias gtag="git describe --tags `git rev-list --tags --max-count=1`"
+alias gtag="myGitLatestTag"
 alias gtags="git tag"
+alias gi="git"
+alias gt="git"
 alias aa="alias"
 alias aph="ansible-playbook -i hosts"
 alias ap="ansible-playbook"
@@ -129,6 +131,14 @@ alias sshp="ssh -o PreferredAuthentications=password"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
+myGitLatestTag (){
+    GIT_LATEST_TAG=$(GIT_DISCOVERY_ACROSS_FILESYSTEM=1 git rev-list --tags --max-count=1 2>&1 | grep -v fatal)
+    if [[ $GIT_LATEST_TAG  ]]; then
+      GIT_DISCOVERY_ACROSS_FILESYSTEM=1 git describe --tags $GIT_LATEST_TAG 2>&1 | grep -v fatal;
+    else
+      echo "No git tag on this repo"
+    fi
+}
 tsave() {
   local d=$'\t'
   tmux list-windows -a -F "#S${d}#W${d}#{pane_current_path}" > ~/.tmux-session
@@ -306,17 +316,16 @@ myfindtype()
     echo $FIND_QUERY
         eval $FIND_QUERY
 }
-myfind()
-{
-        echo -e '\e[1;34m=======================================================================\e[0m'
-        if [[ "$2" ]]; then 
-		find . -not -path '*/\.git/*' -not -path '*/\.hg/*' -iname "*$1*" -exec grep -s "$2" --color=auto {} \;
-    	else if [[ "$1" ]]; then
-		find .  -not -path '*/\.git/*' -not -path '*/\.hg/*'  -iname "*$1*"
-	else
-		echo "Enter: \$1 filename_pattern and optional \$2 grep_pattern"
-	fi
-	fi
+myfind() {
+  echo -e '\e[1;34m=======================================================================\e[0m';
+  if [[ "$2" ]]; then 
+    find . -not -path '*/\.git/*' -not -path '*/\.hg/*' -iname "*$1*" -exec grep -s "$2" --color=auto {} \;
+  else if [[ "$1" ]]; then
+    find .  -not -path '*/\.git/*' -not -path '*/\.hg/*'  -iname "*$1*";
+  else
+    echo "Enter: \$1 filename_pattern and optional \$2 grep_pattern";
+  fi
+  fi
 }
 myfindmm()
 {
