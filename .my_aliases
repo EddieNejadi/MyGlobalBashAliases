@@ -131,7 +131,13 @@ alias sshp="ssh -o PreferredAuthentications=password"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 # My own functions
-myGitLatestTag (){
+myGitConfigGloballyAliases (){ # Need to be ran once on a system
+    git config --global alias.co checkout
+    git config --global alias.br branch
+    git config --global alias.ci commit
+    git config --global alias.st status
+}
+myGitLatestTag (){ # Will be called by alias
     GIT_LATEST_TAG=$(GIT_DISCOVERY_ACROSS_FILESYSTEM=1 git rev-list --tags --max-count=1 2>&1 | grep -v fatal)
     if [[ $GIT_LATEST_TAG  ]]; then
       GIT_DISCOVERY_ACROSS_FILESYSTEM=1 git describe --tags $GIT_LATEST_TAG 2>&1 | grep -v fatal;
