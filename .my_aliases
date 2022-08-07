@@ -97,14 +97,14 @@ alias less="less -Ri"
 alias pwdp="pwd -P"
 alias pwp="pwdp"
 alias ls="ls -1"
-alias ll='pwd && ls -htral --color=auto'
+alias ll='pwd && ls -latrh --color=auto'
 alias lsl='pwd && ls -hla --color=auto'
 alias lsd='ls -lad */ .*/'
 alias lld='ls -latrhd --color */ .*/'
 alias pd="pushd"
 alias po="popd"
 alias dir="dirs -v -l"
-alias cd="pushd"
+# alias cd="pushd || cd ~"
 alias "cd-"="pushd"
 alias "cdh"="pushd ~"
 alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|warn"/`printf "\033[33mWARNING\033[0m"`/Ig'
