@@ -65,7 +65,9 @@ alias findn="line && find . -iname"
 alias mydu="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h"
 alias mydut="du -sch .[!.]* * 2>&1 | grep -v 'du: cannot access .* No such file or directory' | sort -h | tail"
 alias updatedb="sudo updatedb"
+alias mygreplc='LC_ALL=C mygrep'
 alias mygrep='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" --exclude-dir=.hg'
+alias mygreplc='LC_ALL=C mygrep'
 alias mygrepc='grep -IHn --color="always"'
 alias mygrepi='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHni --color="auto" --exclude-dir=.hg'
 alias mygrep1='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -C 1'
@@ -74,6 +76,7 @@ alias mygrep5='echo -e "\e[1;33m================================================
 alias mygrep10='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 10 -A 10'
 alias mygrep20='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 20 -A 20'
 alias mygrepr='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnr --color="auto" --exclude-dir=.hg'
+alias mygreplr='echo -e "\e[1;33m=======================================================================\e[0m" && LC_ALL=C grep -IHnr --color="auto" --exclude-dir=.hg'
 alias mygreprc='grep -IHnr --color="always" --exclude-dir=.hg'
 alias mygrepir='echo -e "\e[2;33m=======================================================================\e[0m" && grep -IHnri --color="auto" --exclude-dir=.hg'
 alias mygrepirc='grep -IHnri --color="always" --exclude-dir=.hg'
@@ -109,7 +112,8 @@ alias "cd-"="pushd"
 alias "cdh"="pushd ~"
 alias myhl='sed s/ERROR/`printf "\033[31mERROR\033[0m"`/Ig | sed "s/warning\|warn"/`printf "\033[33mWARNING\033[0m"`/Ig'
 alias mypsm="ps aux --sort -rss"
-alias meminfo='echo "USER                RSS      PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
+alias meminfomb='echo "USER                RSS MB   PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024, procs[user];}'"'"' | sort -rnk2'
+alias meminfogb='echo "USER                RSS GB   PROCS" ; echo "------------------- -------- -----" ; ps hax -o rss,user | awk '"'"'{rss[$2]+=$1;procs[$2]+=1;}END{for(user in rss) printf "%-20s %8.0f %5.0f\n", user, rss[user]/1024/1024 , procs[user];}'"'"' | sort -rnk2'
 alias myenv="env | grep -i --color"
 alias mygitl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit -33 --author='Mahdi Abdinejadi' --date=local"
 alias gtag="myGitLatestTag"
@@ -182,12 +186,15 @@ trestore() {
 rmtmp() { find . -name '*~' -ls -delete; } 
 rm1() { find . -name '1' -type f \( -size 0 -or -size 141c \) -ls -delete; }
 rm1a() { find . -name '1' -type f -ls -delete; }
-rml() {
+rml() { # delete line remove line
 	if [[ -z "$1" || -z "$2" ]]; then
 		echo "Enter line number to remove and file name"
 	else
 		sed -i ''$1'd' $2
 	fi
+}
+rmlssh() {
+	rml "$1" "/home/$USER/.ssh/known_hosts"
 }
 srm() 
 {
