@@ -137,6 +137,7 @@ alias sshp="ssh -o PreferredAuthentications=password"
 # alias fullname="getent passwd `whoami` | cut -d ':' -f 5"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
+alias whatismyip="curl ipecho.net/plain || curl ipinfo.io/ip"
 # My own functions
 myGitConfigGloballyAliases (){ # Need to be ran once on a system
     git config --global alias.co checkout
