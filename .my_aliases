@@ -42,6 +42,10 @@ fi
 # export BROWSER=wslview
 # sudo ln -s $(which wslview) /usr/local/bin/xdg-open
 ####
+if [ -f ./my_openssl_encrypt.sh ]; then
+	alias encrypt="~/MyGlobalBashAliases/my_openssl_encrypt.sh"
+	alias decrypt="encrypt"
+fi
 
 alias c="xclip -sel clip && echo -e '\e[1;33mAliases copied to xclip\e[0m'" # you might try 2>&1 before copy
 alias ..="pushd .."
