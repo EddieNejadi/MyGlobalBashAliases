@@ -53,7 +53,7 @@ alias ...="pushd ../.."
 alias ....="pushd ../../.."
 alias .....="pushd ../../../../"
 alias tmux="tmux -2"
-alias ta="tmux -a"
+alias ta="tmux a"
 alias tvim="tmux new-session 'vim'  \;"
 alias ovim="vim -o"
 alias oovim="vim -O"
@@ -81,7 +81,7 @@ alias mygrep5='echo -e "\e[1;33m================================================
 alias mygrep10='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 10 -A 10'
 alias mygrep20='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHn --color="auto" -B 20 -A 20'
 alias mygrepr='echo -e "\e[1;33m=======================================================================\e[0m" && grep -IHnr --color="auto" --exclude-dir=.hg'
-alias mygreplr='echo -e "\e[1;33m=======================================================================\e[0m" && LC_ALL=C grep -IHnr --color="auto" --exclude-dir=.hg'
+alias mygreprl='echo -e "\e[1;33m=======================================================================\e[0m" && LC_ALL=C grep -IHnr --color="auto" --exclude-dir=.hg'
 alias mygreprc='grep -IHnr --color="always" --exclude-dir=.hg'
 alias mygrepir='echo -e "\e[2;33m=======================================================================\e[0m" && grep -IHnri --color="auto" --exclude-dir=.hg'
 alias mygrepirl='echo -e "\e[2;33m=======================================================================\e[0m" && LC_ALL=C grep -IHnri --color="auto" --exclude-dir=.hg'
@@ -128,6 +128,10 @@ alias gtags="git tag"
 alias gi="git"
 alias gt="git"
 alias gits="git st --untracked-files=no ."
+alias gitd="git diff ."
+alias gitsh="git show --pretty="" --name-only"
+alias gitp="git pull"
+alias gitf="git fetch"
 alias aa="alias"
 alias aph="ansible-playbook -i hosts"
 alias ap="ansible-playbook"
@@ -139,6 +143,7 @@ alias anv="ansible-vault"
 alias apv="ansible-vault"
 alias anph="ansible-playbook -i hosts"
 alias sshp="ssh -o PreferredAuthentications=password"
+alias lns="ln -s"
 # alias fullname="getent passwd `whoami` | cut -d ':' -f 5"
 alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cut -d ' ' -f 2-  || echo ''; echo -n 'Local: ' && getent passwd $USER | cut -d ':' -f 5 || echo '' "
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
