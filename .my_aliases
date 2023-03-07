@@ -302,6 +302,18 @@ get_ff_info_timeout ()
 	fi
 }
 parse_git_hg_branch() {
+        RC=$?
+        BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')
+        if [[ -z "$BRANCH" ]];then
+            BRANCH=$(hg branch 2> /dev/null)
+        fi
+        if [[ $RC = 0 ]]; then
+            echo $BRANCH
+        else
+                echo -e "\033[1;31m $BRANCH | Er: $?"
+        fi
+}
+parse_git_hg_branch_() {
 	if [[ $? = 0 ]]; then
 		_hgb=$(hg branch 2> /dev/null)
 		if [[ "$_hgb" ]]; then
