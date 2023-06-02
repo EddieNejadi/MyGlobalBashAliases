@@ -130,6 +130,8 @@ alias gi="git"
 alias gt="git"
 alias gits="git st --untracked-files=no ."
 alias gitd="git diff ."
+alias gitm="git merge --squash"
+alias gitr="git rebase"
 alias gitsh="git show --pretty="" --name-only"
 alias gitp="git pull"
 alias gitf="git fetch"
@@ -153,6 +155,7 @@ alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cu
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 alias whatismyip="curl ipecho.net/plain || curl ipinfo.io/ip"
 # My own functions
+# Git NFS preformance git config core.preloadindex true
 myGitConfigGloballyAliases (){ # Need to be ran once on a system
     git config --global alias.co checkout
     git config --global alias.br branch
