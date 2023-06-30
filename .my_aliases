@@ -218,7 +218,10 @@ rml() { # delete line remove line
 rmlssh() {
 	rml "$1" "/home/$USER/.ssh/known_hosts"
 }
-srm() 
+rmssh() {
+	ssh-keygen -f "/home/$USER/.ssh/known_hosts" -R "$1"
+}
+srm()
 {
 	shred -z -u $@
 }
