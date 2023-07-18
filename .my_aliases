@@ -156,6 +156,7 @@ alias fullname="echo -n 'Ldap: ' && ldapsearch -x -LLL uid=$USER | grep cn: | cu
 alias newrole="/etc/ansible/roles/gotansible.newrole/newrole"
 alias whatismyip="curl ipecho.net/plain || curl ipinfo.io/ip"
 alias rmel="sed -i '/^$/d'"
+alias rmssh="ssh-keygen -f '/home/$USER/.ssh/known_hosts' -R"
 # My own functions
 # Git NFS preformance git config core.preloadindex true
 myGitConfigGloballyAliases (){ # Need to be ran once on a system
@@ -220,9 +221,9 @@ rml() { # delete line remove line
 rmlssh() {
 	rml "$1" "/home/$USER/.ssh/known_hosts"
 }
-rmssh() {
-	ssh-keygen -f "/home/$USER/.ssh/known_hosts" -R "$1"
-}
+# rmssh() {
+# 	ssh-keygen -f "/home/$USER/.ssh/known_hosts" -R "$1"
+# }
 srm()
 {
 	shred -z -u $@
