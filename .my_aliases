@@ -166,6 +166,10 @@ myGitConfigGloballyAliases (){ # Need to be ran once on a system
     git config --global alias.st status
     # git config --global alias.ms '!f() { git checkout master && git merge --squash @{-1} && git commit -m "$1"; }; f'
     git config --global alias.ms 'merge --squash @{-1}'
+    git maintenance start
+    git config --global rerere.enable true # conflict fixes would be remembered for the next time
+    # git config gpg.format ssh
+    # git config user.signingkey ~/.ssh/key.pub
 }
 myGitLatestTag (){ # Will be called by alias
     GIT_LATEST_TAG=$(GIT_DISCOVERY_ACROSS_FILESYSTEM=1 git rev-list --tags --max-count=1 2>&1 | grep -v fatal)
