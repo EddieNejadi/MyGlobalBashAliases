@@ -164,6 +164,7 @@ myGitConfigGloballyAliases (){ # Need to be ran once on a system
     git config --global alias.br branch
     git config --global alias.ci commit
     git config --global alias.st status
+    git config --global alias.sw switch
     # git config --global alias.ms '!f() { git checkout master && git merge --squash @{-1} && git commit -m "$1"; }; f'
     git config --global alias.ms 'merge --squash @{-1}'
     git maintenance start
