@@ -1,0 +1,38 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:latest
+    container_name: open-webui
+    ports:
+      - "3000:8080"
+    volumes:
+      # Persists data like chat history and user settings (required)
+      - open-webui-data:/app/backend/data
+      # === ADDED VOLUME MOUNT FOR RAG SOURCE FILES ===
+      # Mounts your local 'rag_data' folder to '/app/rag_source' inside the container
+      - ./rag_data:/app/rag_source:ro
+    environment:
+      # OLLAMA_BASE_URL: http://ollama:8080
+      OLLAMA_BASE_URL: http://ollama:11434
+    restart: always
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: always
+
+volumes:
+  open-webui-data:
+  ollama-models:
