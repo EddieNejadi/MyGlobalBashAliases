@@ -1,0 +1,29 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    environment:
+       - OLLAMA_HOST=0.0.0.0
+    volumes:
+      - ollama-models:/root/.ollama
+    networks:
+      - ollama-network
+    restart: unless-stopped
+    # Include the section below ONLY if you have an NVIDIA GPU and the NVIDIA Container Toolkit installed
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  ollama-models:
+
+networks:
+  ollama-network:
+    # external: true
+    driver: bridge
