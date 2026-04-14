@@ -141,6 +141,7 @@ alias gitbr="git branch -r"
 alias gitcr="git checkout --track" # to switch to remote branch ex. git checkout --track origin/AYT_125
 alias gitg="git grep -Hni"
 alias gitgc="git grep -Hn"
+alias gitsave="gitsnap"
 alias aa="alias"
 alias aph="ansible-playbook -i hosts"
 alias ap="ansible-playbook"
@@ -186,6 +187,24 @@ myGitLatestTag (){ # Will be called by alias
       echo "No git tag on this repo"
     fi
 }
+gitsnap() {
+  # Get the current branch name
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  # Get current date/time
+  local date=$(date +"%Y-%m-%d %H:%M:%S")
+  
+  # Use the first argument as the message, or default to "Branch [Date]"
+  local message="${1:-$branch [$date]}"
+
+  echo "Creating stash: $message"
+  
+  # Push to stash while keeping the index and including untracked files
+  git stash push --keep-index -u -m "$message"
+  
+  # Apply the stash back immediately
+  git stash apply
+}
+
 tsave() {
   local d=$'\t'
   tmux list-windows -a -F "#S${d}#W${d}#{pane_current_path}" > ~/.tmux-session
